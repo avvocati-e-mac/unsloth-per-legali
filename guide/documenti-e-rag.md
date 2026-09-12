@@ -1,9 +1,25 @@
 # Documenti e RAG
 
-Un allegato in Chat e una raccolta indicizzata rispondono a esigenze diverse. L'allegato aggiunge contenuto al turno; il RAG suddivide i documenti, cerca passaggi pertinenti e li porta al modello quando fai una domanda. La [guida ufficiale della Chat](https://unsloth.ai/docs/new/studio/chat) conferma gli allegati; l'[articolo del webinar](https://www.avvocati-e-mac.it/blog/2026/09/03/ia-locale-per-avvocati-camera-civile-ravenna/) introduce il RAG con esempi per avvocati.
+La [Chat di Unsloth](https://unsloth.ai/docs/new/studio/chat) permette di allegare file. Il **RAG** è un percorso diverso: prepara un indice dei documenti e, a ogni domanda, cerca i passaggi da consegnare al modello. Nell’[articolo del webinar](https://www.avvocati-e-mac.it/blog/2026/09/03/ia-locale-per-avvocati-camera-civile-ravenna/) lo paragono a un bibliotecario: è utile solo se trova il libro e la pagina giusti.
 
-**Verificato sul codice della build esaminata:** l'allegato PDF in Chat segue un'estrazione testuale; un PDF scansito senza testo non diventa automaticamente un'immagine per Vision. Nel RAG della build esaminata PDF e DOCX passano per parser distinti; tabelle, note, intestazioni e pagine possono perdere informazioni o posizione. Queste osservazioni descrivono l'implementazione letta, **non** un collaudo completo di ogni file o della versione futura.
+## Quale percorso serve?
 
-Per capire che cosa recupera un indice, usa solo documenti inventati: ad esempio due note con date fittizie diverse, ciascuna con una parola chiave unica. Chiedi quale nota sostiene una data e apri il file e il passaggio indicati. Ripeti con la domanda riformulata, poi verifica cosa resta dopo la cancellazione. È una **procedura di verifica proposta**; i test RAG end-to-end nella pipeline reale di Studio sono ancora nella [roadmap](../ROADMAP.md).
+| Hai… | Percorso | Controllo decisivo |
+| --- | --- | --- |
+| Una breve nota testuale | Allegato in Chat | Verifica che il testo letto corrisponda alla nota. |
+| Molti documenti da interrogare più volte | RAG | Apri file e passaggio recuperati, non solo la risposta. |
+| Un PDF composto da immagini | Vision/OCR prima del testo | Controlla date e cifre sulla pagina originale. [Guida OCR →](vision-e-ocr.md) |
 
-Una «knowledge base per pratica» aiuta a organizzare il lavoro, ma non va scambiata per una barriera di sicurezza già dimostrata. In questo repository non entrano documenti o corpus reali, nemmeno anonimizzati. Nei test RAG/OCR del laboratorio gli MCP remoti restano Off. Anche se modello e indice sono locali, un provider o un tool remoto può ricevere contenuti del turno.
+**Verificato sul codice della build esaminata:** il PDF allegato direttamente in Chat segue un'estrazione testuale; una scansione senza testo non diventa automaticamente immagine per Vision. Nel RAG, PDF e DOCX usano parser distinti. Tabelle, note, intestazioni e posizione sulla pagina possono perdersi. Questo descrive l'implementazione letta, **non un collaudo completo** della pipeline reale.
+
+## Un esperimento da fare con note inventate
+
+Prepara **D01** e **D02** con date fittizie diverse e una parola unica in ciascuna. Chiedi quale documento sostiene una data. Poi:
+
+1. apri il file e il passaggio citato;
+2. riformula la domanda e controlla se il recupero cambia;
+3. verifica che cosa resta nell'indice dopo la cancellazione.
+
+È una **procedura proposta**. I test RAG end-to-end di Studio, compresi isolamento e cancellazione, sono ancora nella [roadmap](../ROADMAP.md).
+
+Una raccolta separata per pratica non è una barriera di sicurezza già dimostrata. Questo progetto usa solo materiali sintetici. Durante prove RAG/OCR gli MCP remoti devono restare **Off**: un provider o strumento remoto può ricevere contenuti del turno anche quando modello e indice sono locali.

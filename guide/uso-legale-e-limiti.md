@@ -1,9 +1,24 @@
 # Uso legale: il controllo resta al professionista
 
-Un modello locale può aiutare a ordinare fatti, proporre una scaletta e scrivere una prima bozza. Il punto decisivo è la **fedeltà**: un testo scorrevole può attribuire un fatto al documento sbagliato, omettere una cifra o aggiungere un riferimento che nessuna fonte sostiene.
+Un modello locale può ordinare fatti e proporre una prima bozza. La prova decisiva non è che il testo *suoni* come un atto: è che ogni affermazione sia **fedele alle carte** e ogni fonte sia apribile e pertinente.
 
-**Provato nel laboratorio:** Qwen3.8 27B ha prodotto una bozza sintetica di 1.114 parole, con sezioni e conclusioni riconoscibili. Nel controllo sono emersi un numero di ruolo e un anno non forniti, una formula processuale non attestata, un importo omesso e un segnaposto modificato. Il test ha usato solo materiali inventati e non misura idoneità al deposito. [Scheda delle prove](../risultati/modelli.md).
+## Che cosa è successo nella prova
 
-**Metodo proposto, ancora da valutare sistematicamente:** per ogni affermazione della bozza, annota documento e passaggio che la sostengono; confronta date, importi, parti e segnaposto con l'input; apri personalmente ogni fonte giuridica citata; registra omissioni, aggiunte e incertezze. Se la fonte manca, il testo deve restare una domanda di verifica, non diventare una conclusione certa.
+**Provato con materiali inventati:** Qwen3.8 27B ha scritto una bozza di **1.114 parole**, con sezioni e conclusioni riconoscibili. Il controllo ha trovato:
 
-«Locale» descrive dove gira il modello, non tutto il percorso dei dati. Ricerca web, API esterne e MCP possono comunicare fuori dal Mac. Prima di usare materiali professionali occorre definire dati ammessi, accessi, conservazione e controlli nel proprio ambiente. Questo progetto pubblico usa esclusivamente esempi sintetici e non è un archivio di pratiche.
+- un numero di ruolo e un anno **non forniti**;
+- una formula processuale non attestata;
+- un importo **omesso** e un segnaposto modificato.
+
+La prova non misura l'idoneità al deposito. [Configurazione e risultati →](../risultati/modelli.md)
+
+## Una lista di controllo per bozze sintetiche
+
+Questo è un **metodo proposto**, ancora da valutare sistematicamente:
+
+1. Per ogni fatto, annota **documento e passaggio** che lo sostengono.
+2. Confronta **parti, date, importi e segnaposto** con l'input, inclusi i dati che la bozza ha omesso.
+3. Apri ogni fonte giuridica citata e verifica che dica davvero ciò che la bozza le attribuisce.
+4. Segna le frasi senza fonte come **domande da verificare**, non come conclusioni.
+
+«Locale» dice dove gira il modello, non dove passa ogni dato. Ricerca web, API esterne e MCP possono comunicare fuori dal Mac. Questo repository contiene soltanto esempi sintetici: non è un archivio di pratiche né una prova di idoneità professionale.

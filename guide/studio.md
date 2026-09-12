@@ -1,9 +1,20 @@
 # Come funziona Unsloth Studio
 
-**Documentato da Unsloth e osservato nel laboratorio.** Studio riunisce interfaccia, caricamento del modello, Chat e API locale. La [guida ufficiale](https://unsloth.ai/docs/new/studio) è il riferimento per installazione e versioni aggiornate; [la pagina Chat](https://unsloth.ai/docs/new/studio/chat) descrive modelli e allegati. Le voci dell'interfaccia possono cambiare fra release.
+Studio è la **scrivania**: permette di scegliere e caricare un modello, conversare nella Chat e renderlo raggiungibile da programmi tramite API locale. Il modello è il **collaboratore** che produce testo. I documenti non diventano automaticamente conoscenza permanente del modello.
 
-Per un primo orientamento, apri Studio, scegli un modello che rientri nella memoria della macchina e controlla formato e quantizzazione prima del download. Dopo il caricamento, verifica nella schermata di stato quale modello e quale finestra di contesto sono davvero attivi. Solo allora prova una richiesta innocua, per esempio: «Riassumi in tre punti questo testo inventato: l'assemblea si terrà il 14 ottobre 2042». Non leggere un nome di preset come prova che il runtime abbia applicato quei parametri.
+La [presentazione ufficiale di Studio](https://unsloth.ai/docs/new/studio) è il riferimento per installazione e versioni; la [guida Chat di Unsloth](https://unsloth.ai/docs/new/studio/chat) documenta modelli e allegati. Le voci dell'interfaccia possono cambiare.
 
-**Provato nel laboratorio:** sul Mac Studio M1 Max un Qwen3.8 27B GGUF quantizzato è stato caricato nella build Studio `2026.9.4`; due preset distinti sono stati salvati e riletti. I risultati dipendono dalla memoria libera e dalla versione. [Misure e limiti](../risultati/modelli.md).
+## Un primo giro, con testo inventato
 
-L'interfaccia Desktop e la CLI possono usare lo stesso ambiente. Se un modello sembra già in esecuzione, controlla lo stato prima di avviare altre operazioni. Download, aggiornamenti e impostazioni di rete sono decisioni operative separate dalla lettura di questa guida.
+1. Scegli un modello compatibile con la memoria del tuo Mac; **prima del download** controlla formato e quantizzazione.
+2. Dopo il caricamento, verifica quale **modello** e quale **contesto** risultano davvero attivi. Il nome di un preset non basta.
+3. Prova una domanda innocua: «Riassumi in tre punti: l'assemblea immaginaria si terrà il 14 ottobre 2042».
+4. Confronta la risposta con la frase di partenza. Se compare una sede o un orario, è un'aggiunta senza fonte.
+
+Questi passi sono un **esercizio proposto**. Non rappresentano un nuovo collaudo della procedura.
+
+## Che cosa è stato provato qui
+
+Su Mac Studio M1 Max e Studio `2026.9.4`, il laboratorio ha caricato Qwen3.8 27B GGUF quantizzato e salvato due preset, poi riletti. Le misure dipendono da versione e memoria libera: [configurazione, risultati e limiti](../risultati/modelli.md).
+
+Desktop e CLI possono usare lo **stesso ambiente**. Prima di intervenire su un modello che sembra già attivo, controlla lo stato. Download, aggiornamenti e accesso dalla rete richiedono valutazioni operative distinte.

@@ -1,11 +1,31 @@
 # Vision e OCR delle scansioni
 
-Vision permette al modello di leggere un'immagine. OCR vuol dire ottenere una trascrizione che si possa cercare e confrontare con l'originale. Una trascrizione plausibile può comunque cambiare un numero o inventare una parola: per date, importi e riferimenti serve una verifica sulla pagina. La [guida Chat di Unsloth](https://unsloth.ai/docs/new/studio/chat) documenta gli allegati immagine; la [guida API](https://unsloth.ai/docs/basics/api) documenta l'accesso locale da programmi esterni.
+**Vision** permette al modello di guardare un'immagine. **OCR** è il risultato che cerchiamo: testo ricavato dalla pagina, da confrontare con l'originale. Una trascrizione fluida può comunque cambiare una cifra. La [guida Chat di Unsloth](https://unsloth.ai/docs/new/studio/chat) documenta allegati immagine; la [guida API](https://unsloth.ai/docs/basics/api) documenta l'accesso da programmi.
 
-**Provato nel laboratorio:** Qwen3.8 27B con Vision e contesto 16.384 ha trascritto tramite API due pagine di un PDF **interamente sintetico**, convertite in PNG a 200 dpi e inviate una per richiesta. Una pagina era ruotata di 90°. La similarità delle sequenze di parole normalizzate con i testi di riferimento è stata 0,9939 e 0,9816. È una misura su **due pagine**, con ritaglio e formula specifici, non un punteggio OCR generale. Alcune parole e timbri erano errati. [Metodo e limiti](../risultati/modelli.md).
+## Il percorso provato
 
-**Proposta di verifica:** crea una pagina inventata con due date, un importo e una sigla; conserva un testo di riferimento separato. Confronta ogni campo e segnala parti illeggibili, omissioni e aggiunte. Su un PDF scansito multipagina, trattare una pagina per volta rende visibile quale richiesta ha fallito. Prima di usare un risultato, verifica sempre la pagina originale.
+`PDF sintetico → PNG a 200 dpi → Qwen Vision via API → testo per pagina`
 
-Il percorso provato produce **testo e manifest**, non un PDF ricercabile con layer OCR. Il testo libero di Vision non contiene le coordinate necessarie per allineare selezione ed evidenziazione sulla pagina. Un layer affidabile richiede anche informazioni di posizione e un controllo visivo. La prova diretta di un PDF scansito allegato in Chat non è stata eseguita.
+**Provato nel laboratorio:** Qwen3.8 27B, Vision attiva e contesto 16.384, ha trascritto **due pagine inventate**, una ruotata di 90°. La similarità delle sequenze di parole normalizzate rispetto al testo di riferimento è stata **0,9939** e **0,9816**; alcune parole e timbri erano errati. È una formula su due pagine, **non** un punteggio OCR generale. [Metodo e limiti →](../risultati/modelli.md)
 
-Lo [script OCR](../scripts/ocr-pdf-qwen38-api.py) riproduce il percorso PDF → PNG → API → testo per pagina. Richiede Python 3.10+, Poppler (`pdfinfo` e `pdftoppm`), Studio in ascolto **solo su `127.0.0.1:8888`** con Qwen Vision già caricato e una chiave ufficiale nella variabile `UNSLOTH_API_KEY`. Esempio con un PDF **sintetico** già creato fuori dal repository: `python3 scripts/ocr-pdf-qwen38-api.py /percorso/esterno/esempio.pdf --output /percorso/esterno/risultato-ocr`. Lo script non carica modelli e non crea layer OCR; controlla ogni file `page-*.txt` contro l'originale. È stato verificato offline con un PDF sintetico e una risposta API simulata; l'esecuzione reale documentata nella scheda dei risultati appartiene al laboratorio privato.
+## Come controllare una scansione
+
+Con una pagina **inventata**, inserisci due date, un importo e una sigla. Conserva separatamente il testo corretto. Poi verifica:
+
+1. ogni **campo critico** sulla pagina, non soltanto la somiglianza complessiva;
+2. parole illeggibili, omissioni e parti aggiunte;
+3. la pagina precisa che ha prodotto ogni trascrizione.
+
+È una **procedura proposta**. Il PDF scansito allegato direttamente in Chat **non è stato collaudato**; nella build esaminata l'allegato PDF segue l'estrazione del testo, non l'invio delle pagine come immagini a Vision.
+
+## Che cosa ottieni, e che cosa manca
+
+Il percorso provato produce **file di testo e manifest**, non un PDF ricercabile con evidenziazioni allineate. Il testo libero non contiene coordinate di pagina: per un layer OCR fedele servono posizioni e controllo visivo.
+
+Lo [script OCR](../scripts/ocr-pdf-qwen38-api.py) riproduce il percorso PDF → PNG → API → testo. Richiede Python 3.10+, Poppler (`pdfinfo`, `pdftoppm`), Studio su **`127.0.0.1:8888`** con Qwen Vision già caricato e la chiave ufficiale in `UNSLOTH_API_KEY`. Esempio con PDF **sintetico** fuori dal repository:
+
+```bash
+python3 scripts/ocr-pdf-qwen38-api.py /percorso/esterno/esempio.pdf --output /percorso/esterno/risultato-ocr
+```
+
+Controlla ogni `page-*.txt` contro l'originale. Lo script **non** carica modelli e **non** crea un layer OCR; è stato verificato offline con risposta API simulata. L'esecuzione reale descritta nella scheda dei risultati appartiene al laboratorio privato.
